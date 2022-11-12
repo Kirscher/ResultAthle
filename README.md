@@ -1,6 +1,6 @@
 # ResultAthle
 
-work in progress...
+En cours...
 
 Etape 1 : Scrapping sur les url de bases.athle.fr
 
