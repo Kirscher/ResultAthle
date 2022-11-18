@@ -16,7 +16,7 @@ Objectif : récupérer les données de la FFA (nombre de coureurs, temps, catég
 
 Question : Comment organiser ces données?
 
-A faire : ajouter des tests de vérifications sur les dates par exemples
+A faire : ajouter des tests de vérifications sur les dates par exemple
 
 ## Visualisation :
 
