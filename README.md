@@ -12,6 +12,7 @@ Question : quel output final obtenir? API, pipeline, application
 Etape 1 : Scrapping sur les url de bases.athle.fr
 Objectif : récupérer les données de la FFA (nombre de coureurs, temps, catégories, club,...)
 Question : Comment organiser ces données?
+a faire : ajouter des tests de vérifications sur les dates par exemples
 
 ## Visualisation :
 
