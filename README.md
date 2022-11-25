@@ -1,6 +1,6 @@
 # ResultAthle
 
-*Problématique : Comment rendre l'outil statistique facile d'accès au niveau amateur dans l'athléthisme ?*
+## *Problématique : Comment rendre l'outil statistique facile d'accès au niveau amateur dans l'athléthisme ?*
 
 Sujet à aborder : difficile manipulation des données et le manque de statiques descriptives accessibles que ce soit au niveau des clubs, des courses ou individuel.
 
