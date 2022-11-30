@@ -10,11 +10,11 @@ Question : quel output final obtenir? API, pipeline, application
 
 #### Etape 1 : Scrapping sur les url de bases.athle.fr
 
-Objectif : récupérer les données de la FFA (nombre de coureurs, temps, catégories, club,...)
+Objectif : récupérer les données de la FFA (nombre de coureurs, ligues, temps, catégories, clubs, labels des performances...)
 
 Question : Comment organiser ces données?
 
-A faire : ajouter des tests de vérifications sur les dates par exemple
+A faire : ajouter des tests unitaires sur les champs de données
 
 ## Visualisation :
 
@@ -28,7 +28,8 @@ Benchmark : record de la catégorie étudié au niveau français par exemple
 
 Objectif : visualisation complète des différents indicateurs retenus après avoir sélectionné la course et la catégorie (ou même nom/prénom?)
 
-*Exemple : répartition des temps, répartition des écarts en fonction de la place*
+*Exemple : Distributions des temps*
+*Exemple : Distributions des écarts*
 
 ## Modélisation :
 
