@@ -29,6 +29,7 @@ Benchmark : record de la catégorie étudié au niveau français par exemple
 Objectif : visualisation complète des différents indicateurs retenus après avoir sélectionné la course et la catégorie (ou même nom/prénom?)
 
 *Exemple : Distributions des temps*
+
 *Exemple : Distributions des écarts*
 
 ## Modélisation :
