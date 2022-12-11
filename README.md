@@ -34,6 +34,8 @@ Objectif : visualisation complète des différents indicateurs retenus après av
 
 ## Modélisation :
 
-#### Étape 4 : Régressions qui répondent à la problématique
+#### Étape 4 : Détermination des catégories de courreurs et des objectifs  de performance pour les course de longue durée.
+*Exemple : au maratoh, la densité des temps d'arrivée est forte juste en dessous de 3h, 4h... Comment repérer ces pics de densité ?
 
-*Exemple : meilleur progression au fil des années / évolution des chronos d'une même course au fil des années*
+*On voit souvent au moins deux "bosses" dans la densité des temps, correspondant à deux types d'athlètes : les coureurs performants et les "coureurs du dimanche", qui n'ont généralement pas les mêmes objectifs. Comment séparer ces deux catégories ? 
+
