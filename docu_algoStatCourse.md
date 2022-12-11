@@ -1,4 +1,5 @@
 Le code est divisé en deux : algoStatCourse.ipynb et GraphAlgoStatCourse.ipynb
+Le premier est à utiliser comme bibliothèque dans le code de data-visualisation.
 
 Cette partie du projet permet d'entrer plus en profondeur lors de l'analyse des données. Elle permet d'accomplir l'objectif du projet,
 qui est deproposer des possibilités de data-visualisation qui sortent des outils déjà existants dans les bibliothèques usuelles.
