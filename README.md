@@ -32,7 +32,7 @@ Objectif : visualisation complète des différents indicateurs retenus après av
 
 *Exemple : Distributions des écarts*
 
-## Modélisation :
+## Modélisation : (détaillé dans le wiki)
 
 #### Étape 4 : Détermination des catégories de courreurs et des objectifs  de performance pour les course de longue durée.
 *Exemple : au maratoh, la densité des temps d'arrivée est forte juste en dessous de 3h, 4h... Comment repérer ces pics de densité ?
