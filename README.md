@@ -8,13 +8,14 @@ Question : quel output final obtenir? API, pipeline, application
 
 ## Jeu de données :
 
-#### Etape 1 : Scrapping sur les url de bases.athle.fr
+#### Etape 1 : Scrapping sur les url de bases.athle.fr (détails dans le wiki)
 
 Objectif : récupérer les données de la FFA (nombre de coureurs, ligues, temps, catégories, clubs, labels des performances...)
 
 Question : Comment organiser ces données?
 
 A faire : ajouter des tests unitaires sur les champs de données
+
 
 ## Visualisation :
 
