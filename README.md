@@ -14,9 +14,6 @@ Objectif : récupérer les données de la FFA (nombre de coureurs, ligues, temps
 
 Question : Comment organiser ces données?
 
-A faire : ajouter des tests unitaires sur les champs de données
-
-
 ## Visualisation :
 
 #### Etape 2 : Sélection statistiques descriptives
