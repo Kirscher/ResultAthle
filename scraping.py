@@ -65,13 +65,13 @@ categories=categoriesF+categoriesM
 
 L=[]
 for i in range(nb_pages):
-    url=url+"&frmposition="+str(i)
-    request_text = request.urlopen(url).read()
+    url_i=url+"&frmposition="+str(i)
+    request_text = request.urlopen(url_i).read()
     page = bs4.BeautifulSoup(request_text, "lxml")
     for i in page.find_all('tr'):
         if "groups" not in str(i) and "mainheaders" not in str(i) and "barButtons" not in str(i) and "subheaderscom" not in str(i):
             L.append(i)
-
+    url_i=url
 
 def read_header(page):
     header = page.find('div', {'class' : "mainheaders"})
@@ -94,7 +94,6 @@ def read_header(page):
     re_label = re.compile("(?<=Label ).*(?<!')")
     try:
         label = re_label.findall(sous_titre)[0]
-        print(label)
     except IndexError:
         print("Pas de label pour cette compétition")
         label=None
@@ -176,13 +175,13 @@ i = 0
 while categorie[i]==None:
     i+=1
 debut=i
-print(debut)
 
 liste=[]
 for i in range(len(athletes)):
     ligne=[]
     ligne.append(athletes[i][0])
     ligne.append(ligue[i+debut])
+    #ligne.append(str(clubs[i+debut]))
     ligne.append(temps[i])
     ligne.append(perfs[i+debut])
     ligne.append(annee[i+debut])
