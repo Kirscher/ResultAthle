@@ -1,6 +1,5 @@
 # ResultAthle
-
-![Logo](logo.png)
+<p align="center"><img height=250 src="logo.png"></p>
 
 #### *Problématique : Comment rendre l'outil statistique facile d'accès au niveau amateur dans l'athléthisme ?*
 
