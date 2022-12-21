@@ -45,7 +45,7 @@ Objectif : visualisation complète des différents indicateurs retenus après av
 (détails dans le wiki)
 
 #### Étape 4 : Détermination des catégories de courreurs et des objectifs  de performance pour les course de longue durée.
-*Exemple : au maratoh, la densité des temps d'arrivée est forte juste en dessous de 3h, 4h... Comment repérer ces pics de densité ?*
+*Exemple : au maraton, la densité des temps d'arrivée est forte juste en dessous de 3h, 4h... Comment repérer ces pics de densité ?*
 
 *On voit souvent au moins deux "bosses" dans la densité des temps, correspondant à deux types d'athlètes : les coureurs performants et les "coureurs du dimanche", qui n'ont généralement pas les mêmes objectifs. Comment séparer ces deux catégories ?*
 
