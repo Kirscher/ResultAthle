@@ -94,7 +94,6 @@ def read_header(page):
     re_label = re.compile("(?<=Label ).*(?<!')")
     try:
         label = re_label.findall(sous_titre)[0]
-        print(label)
     except IndexError:
         print("Pas de label pour cette compétition")
         label=None
@@ -176,13 +175,13 @@ i = 0
 while categorie[i]==None:
     i+=1
 debut=i
-print(debut)
 
 liste=[]
 for i in range(len(athletes)):
     ligne=[]
     ligne.append(athletes[i][0])
     ligne.append(ligue[i+debut])
+    #ligne.append(str(clubs[i+debut]))
     ligne.append(temps[i])
     ligne.append(perfs[i+debut])
     ligne.append(annee[i+debut])
