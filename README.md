@@ -13,7 +13,17 @@ Question : quel output final obtenir? API, pipeline, application
 
 Objectif : récupérer les données de la FFA (nombre de coureurs, ligues, temps, catégories, clubs, labels des performances...)
 
-Question : Comment organiser ces données?
+Pour récupérer le fichier `.csv` contenant la liste des résultats d'une compétition running du site de résultats bases.athle, on peut utiliser le notebook __scraping.ipynb__ ou simplement la commande suivante :
+
+```sh
+$ python scraping.py "url" nb_pages
+```
+
+avec `url` l'url de bases.athle de la compétition à scraper et `nb_pages` le nombre de pages de résultats que l'on souhaite scrapper.
+
+Exemple : 
+![image](https://user-images.githubusercontent.com/85068746/208872719-895ea70c-ce86-4590-becc-1573a03d0eff.png)
+
 
 ## Visualisation
 
