@@ -65,13 +65,13 @@ categories=categoriesF+categoriesM
 
 L=[]
 for i in range(nb_pages):
-    url=url+"&frmposition="+str(i)
-    request_text = request.urlopen(url).read()
+    url_i=url+"&frmposition="+str(i)
+    request_text = request.urlopen(url_i).read()
     page = bs4.BeautifulSoup(request_text, "lxml")
     for i in page.find_all('tr'):
         if "groups" not in str(i) and "mainheaders" not in str(i) and "barButtons" not in str(i) and "subheaderscom" not in str(i):
             L.append(i)
-
+    url_i=url
 
 def read_header(page):
     header = page.find('div', {'class' : "mainheaders"})
