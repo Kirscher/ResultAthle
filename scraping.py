@@ -1,14 +1,14 @@
 import sys
 import os
-import lxml
+
+os.system('pip install lxml')
+
 import urllib
 import bs4
 import pandas as pd
 import numpy as np
 import re
 from urllib import request
-
-os.system('pip install lxml')
 
 def read_input():
     if len(sys.argv[1:])<=2:
@@ -134,7 +134,7 @@ for i in L:
     else:
         ligue.append(match.group())
 
-re_perf = re.compile("[A-Z]{1}[1-8](?=<)|I[A,B](?=<)")
+re_perf = re.compile("[A-Z]{1,2}[1-8](?=<)|I[A,B](?=<)")
 perfs=[]
 for i in L:
     match= str(re_perf.findall(str(i))).replace('[','').replace(']','').replace('\'','')
