@@ -121,9 +121,18 @@ for i in L:
 temps=[x for x in temps if x!=[]]
 for i in range(len(temps)):
     temps[i]=temps[i][0].replace("<b>","")
-    temps[i]=pd.to_datetime(temps[i], format='%Hh%M\'%S\'\'', errors='ignore')
-    temps[i]=pd.to_datetime(temps[i], format='%M\'%S\'\'', errors='ignore')
-    temps[i]=pd.to_datetime(temps[i], format='%S\'\'', errors='ignore')
+    try:
+        temps[i]=pd.to_datetime(temps[i], format='%Hh%M\'%S\'\'')
+    except ValueError as e:
+        pass #ignore error and try next datetime format
+    try:
+        temps[i]=pd.to_datetime(temps[i], format='%M\'%S\'\'')
+    except ValueError as e:
+        pass #ignore error and try next datetime format
+    try:
+        temps[i]=pd.to_datetime(temps[i], format='%S\'\'')
+    except ValueError as e:
+       pass #ignore error and try next datetime format
 
 re_ligue = re.compile("[A-Z]{3,}(?=<)|[A-Z]-[A-Z](?=<)")
 ligue=[]
