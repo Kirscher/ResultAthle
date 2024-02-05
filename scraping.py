@@ -12,11 +12,13 @@ def install_lxml():
 
 def read_input():
     """Read command line arguments."""
-    if len(sys.argv[1:])<=2:
+    if len(sys.argv) < 2:
+        return("No URL provided", None)
+    elif len(sys.argv[1:])<=2:
         url=sys.argv[1:][0]
         nb_pages=sys.argv[1:][1]
         return(url, int(nb_pages))
-    else: 
+    else:
         return("Bad parameter value", None)
 
 #bareme et table de cotation
@@ -62,8 +64,17 @@ def get_categories(cat):
 def get_page(url, i):
     """Get page content from url."""
     url_i=url+"&frmposition="+str(i)
-    request_text = request.urlopen(url_i).read()
-    return bs4.BeautifulSoup(request_text, "lxml")
+    try:
+        request_text = requests.get(url_i)
+        request_text.raise_for_status()
+    except requests.HTTPError as http_err:
+        print(f'HTTP error occurred: {http_err}')
+        return None
+    except Exception as err:
+        print(f'Other error occurred: {err}')
+        return None
+    else:
+        return bs4.BeautifulSoup(request_text.text, "lxml")
 
 def get_rows(page, nb_pages):
     """Get all rows from the page."""
@@ -265,10 +276,14 @@ def main():
     cat = get_cat()
     categories = get_categories(cat)
     rows = []
-    for i in range(nb_pages):
-        page = get_page(url, i)
-        rows += get_rows(page, nb_pages)
-    header = read_header(page)
+    if nb_pages > 0:
+        for i in range(nb_pages):
+            page = get_page(url, i)
+            rows += get_rows(page, nb_pages)
+        header = read_header(page)
+    else:
+        print("Error: nb_pages must be greater than 0")
+        return
     print(header)
     athletes, temps, ligue, perfs, categorie, annee = get_liste(rows, categories, perf)
     liste = [athletes, temps, ligue, perfs, categorie, annee]
