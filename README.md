@@ -1,5 +1,5 @@
 # ResultAthle
-<p align="center"><img src="logo.png"></p>
+<p align="center"><img src="src/logo.png"></p>
 
 ResultAthle is a project aimed at making statistical tools more accessible at the amateur level in athletics. It addresses the challenges of data manipulation and the lack of accessible descriptive statistics at the club, race, or individual level.
 
@@ -30,7 +30,7 @@ python scraping.py "url" nb_pages
 Where 'url' is the bases.athle URL of the competition to scrape and 'nb_pages' is the number of result pages you want to scrape.
 
 Example : 
-![image](https://user-images.githubusercontent.com/85068746/208872719-895ea70c-ce86-4590-becc-1573a03d0eff.png)
+![cli_output_example](/src/cli_output_example.png)
 
 ## Features Under Development
 
