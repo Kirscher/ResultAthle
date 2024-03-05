@@ -6,17 +6,13 @@ import numpy as np
 import re
 from urllib import request
 
-
-def install_lxml():
-    """Install lxml if not already installed."""
-    os.system("pip install lxml")
-
-
 def read_input():
     """Read command line arguments."""
     if len(sys.argv) < 2:
         return ("No URL provided", None)
-    elif len(sys.argv[1:]) <= 2:
+    elif len(sys.argv[1:]) < 2:
+        return ("Number of pages not provided", None)
+    elif len(sys.argv[1:]) == 2:
         url = sys.argv[1:][0]
         nb_pages = sys.argv[1:][1]
         return (url, int(nb_pages))
@@ -104,30 +100,29 @@ def get_page(url, i):
     """Get page content from url."""
     url_i = url + "&frmposition=" + str(i)
     try:
-        request_text = requests.get(url_i)
-        request_text.raise_for_status()
-    except requests.HTTPError as http_err:
+        with request.urlopen(url_i) as response:
+            request_text = response.read().decode('utf-8')
+    except request.HTTPError as http_err:
         print(f"HTTP error occurred: {http_err}")
         return None
     except Exception as err:
         print(f"Other error occurred: {err}")
         return None
     else:
-        return bs4.BeautifulSoup(request_text.text, "lxml")
+        return bs4.BeautifulSoup(request_text, "lxml")
 
 
-def get_rows(page, nb_pages):
+def get_rows(page):
     """Get all rows from the page."""
     rows = []
-    for i in range(nb_pages):
-        for i in page.find_all("tr"):
-            if (
-                "groups" not in str(i)
-                and "mainheaders" not in str(i)
-                and "barButtons" not in str(i)
-                and "subheaderscom" not in str(i)
-            ):
-                rows.append(i)
+    for i in page.find_all("tr"):
+        if (
+            "groups" not in str(i)
+            and "mainheaders" not in str(i)
+            and "barButtons" not in str(i)
+            and "subheaderscom" not in str(i)
+        ):
+            rows.append(i)
     return rows
 
 
@@ -323,7 +318,6 @@ def get_data(liste):
 
 def main():
     """Main function."""
-    install_lxml()
     try:
         url, nb_pages = read_input()
         if nb_pages is None:
@@ -340,7 +334,7 @@ def main():
     if nb_pages > 0:
         for i in range(nb_pages):
             page = get_page(url, i)
-            rows += get_rows(page, nb_pages)
+            rows += get_rows(page)
         header = read_header(page)
     else:
         print("Error: nb_pages must be greater than 0")
