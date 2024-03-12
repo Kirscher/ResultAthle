@@ -315,6 +315,34 @@ def get_data(liste):
 
     return data
 
+def scrape(url):
+    """Main function."""
+    try:
+        url, nb_pages = url, 1
+        if nb_pages is None:
+            print(url)  # url contains the error message in this case
+            sys.exit()
+    except ValueError:
+        print("Bad parameter value")
+        sys.exit()
+
+    perf = get_perf()
+    cat = get_cat()
+    categories = get_categories(cat)
+    rows = []
+    if nb_pages > 0:
+        for i in range(nb_pages):
+            page = get_page(url, i)
+            rows += get_rows(page)
+        header = read_header(page)
+    else:
+        print("Error: nb_pages must be greater than 0")
+        return
+    print(header)
+    athletes, temps, ligue, perfs, categorie, annee = get_liste(rows, categories, perf)
+    liste = [athletes, temps, ligue, perfs, categorie, annee]
+    data = get_data(liste)
+    return data
 
 def main():
     """Main function."""

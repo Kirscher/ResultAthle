@@ -1,0 +1,74 @@
+/* Apply styles to the body */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+
+/* Apply styles to the header */
+h1 {
+    text-align: center;
+    margin-top: 20px;
+    color: #333;
+}
+
+/* Apply styles to the form */
+form {
+    width: 50%;
+    margin: 0 auto;
+    text-align: center;
+}
+
+/* Apply styles to the input field */
+input[type="text"] {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+/* Apply styles to the submit button */
+button[type="submit"] {
+    background-color: #4caf50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+/* Apply styles to the table */
+table {
+    width: 80%;
+    margin: 20px auto;
+    border-collapse: collapse;
+}
+
+/* Apply styles to the table headers */
+th {
+    background-color: #4caf50;
+    color: white;
+    padding: 10px;
+}
+
+/* Apply styles to the table cells */
+td {
+    padding: 8px;
+    border-bottom: 1px solid #ddd;
+}
+
+/* Apply styles to the download link */
+a {
+    display: block;
+    width: 100px;
+    margin: 20px auto;
+    text-align: center;
+    padding: 10px;
+    background-color: #4caf50;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+}

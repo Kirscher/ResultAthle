@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scraped Results</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <a href="/download">Download Results as CSV</a>
+    <h1>Scraped Results</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Athlete</th>
+                <th>League</th>
+                <th>Performance</th>
+                <th>Year of Birth</th>
+                <th>Category</th>
+                <th>Time Delta</th>
+                <th>Time Gap</th>
+                <th>Duration</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for result in results %}
+            <tr>
+                <td>{{ result.Athlète }}</td>
+                <td>{{ result.Ligue }}</td>
+                <td>{{ result.Performance }}</td>
+                <td>{{ result.Naissance }}</td>
+                <td>{{ result.Catégorie }}</td>
+                <td>{{ result.time_delta }}</td>
+                <td>{{ result.time_gap }}</td>
+                <td>{{ result.duration }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

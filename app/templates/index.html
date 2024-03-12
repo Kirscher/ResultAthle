@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Race Result Scraper</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h1>Race Result Scraper</h1>
+    <form action="/scrape" method="POST">
+        <label for="url">Enter URL of the race results:</label><br>
+        <input type="text" id="url" name="url"><br>
+        <button type="submit">Scrape Results</button>
+    </form>
+</body>
+</html>
