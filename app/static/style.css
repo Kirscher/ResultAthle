@@ -1,3 +1,9 @@
+.center {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
 /* Apply styles to the body */
 body {
     font-family: Arial, sans-serif;
@@ -32,7 +38,7 @@ input[type="text"] {
 
 /* Apply styles to the submit button */
 button[type="submit"] {
-    background-color: #4caf50;
+    background-color: #0c527a;
     color: white;
     padding: 10px 20px;
     border: none;
@@ -49,7 +55,7 @@ table {
 
 /* Apply styles to the table headers */
 th {
-    background-color: #4caf50;
+    background-color: #0c527a;
     color: white;
     padding: 10px;
 }
@@ -67,8 +73,9 @@ a {
     margin: 20px auto;
     text-align: center;
     padding: 10px;
-    background-color: #4caf50;
+    background-color: #0c527a;
     color: white;
     text-decoration: none;
     border-radius: 5px;
 }
+

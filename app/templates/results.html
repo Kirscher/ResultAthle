@@ -7,8 +7,8 @@
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-    <a href="/download">Download Results as CSV</a>
-    <h1>Scraped Results</h1>
+    <a href="/download">Télécharger les résultats</a>
+    <h1>Résultats</h1>
     <table>
         <thead>
             <tr>
@@ -24,6 +24,7 @@
         </thead>
         <tbody>
             {% for result in results %}
+            {% if loop.index <= 10 %}
             <tr>
                 <td>{{ result.Athlète }}</td>
                 <td>{{ result.Ligue }}</td>
@@ -34,6 +35,7 @@
                 <td>{{ result.time_gap }}</td>
                 <td>{{ result.duration }}</td>
             </tr>
+            {% endif %}
             {% endfor %}
         </tbody>
     </table>
