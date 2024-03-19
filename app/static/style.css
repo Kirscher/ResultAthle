@@ -38,7 +38,7 @@ input[type="text"] {
 
 /* Apply styles to the submit button */
 button[type="submit"] {
-    background-color: #0c527a;
+    background-color: #483d8b;
     color: white;
     padding: 10px 20px;
     border: none;
@@ -55,7 +55,7 @@ table {
 
 /* Apply styles to the table headers */
 th {
-    background-color: #0c527a;
+    background-color: #483d8b;
     color: white;
     padding: 10px;
 }
@@ -73,9 +73,8 @@ a {
     margin: 20px auto;
     text-align: center;
     padding: 10px;
-    background-color: #0c527a;
+    background-color: #483d8b;
     color: white;
     text-decoration: none;
     border-radius: 5px;
 }
-

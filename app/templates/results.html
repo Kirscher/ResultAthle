@@ -1,14 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Scraped Results</title>
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
 </head>
+
 <body>
-    <a href="/download">Télécharger les résultats</a>
-    <h1>Résultats</h1>
+    <div style="text-align: center;">
+        <h2>{{ header.nom }}</h2>
+        <p>Lieu: {{ header.lieu }}</p>
+        <p>Date: {{ header.date }}</p>
+        <p>Dept: {{ header.dept }}</p>
+        <p>Label: {{ header.label }}</p>
+    </div>
     <table>
         <thead>
             <tr>
@@ -24,8 +31,7 @@
         </thead>
         <tbody>
             {% for result in results %}
-            {% if loop.index <= 10 %}
-            <tr>
+            {% if loop.index <= 10 %} <tr>
                 <td>{{ result.Athlète }}</td>
                 <td>{{ result.Ligue }}</td>
                 <td>{{ result.Performance }}</td>
@@ -34,10 +40,25 @@
                 <td>{{ result.time_delta }}</td>
                 <td>{{ result.time_gap }}</td>
                 <td>{{ result.duration }}</td>
-            </tr>
-            {% endif %}
-            {% endfor %}
+                </tr>
+                {% endif %}
+                {% endfor %}
         </tbody>
     </table>
+    <div style="text-align: center;">
+        <a href="/download">Télécharger tous les résultats</a>
+        <h2>Visualisations</h2>
+        <table style="margin: 0 auto;">
+            <tr>
+                <td><img src="{{ url_for('static', filename='Naissance.png') }}" alt="Naissance Distribution"></td>
+                <td><img src="{{ url_for('static', filename='Catégorie.png') }}" alt="Catégorie Distribution"></td>
+            </tr>
+            <tr>
+                <td><img src="{{ url_for('static', filename='time_gap.png') }}" alt="Time Gap"></td>
+                <td><img src="{{ url_for('static', filename='duration.png') }}" alt="Duration"></td>
+            </tr>
+        </table>
+    </div>
 </body>
+
 </html>

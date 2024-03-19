@@ -6,6 +6,7 @@ import numpy as np
 import re
 from urllib import request
 
+
 def read_input():
     """Read command line arguments."""
     if len(sys.argv) < 2:
@@ -101,7 +102,7 @@ def get_page(url, i):
     url_i = url + "&frmposition=" + str(i)
     try:
         with request.urlopen(url_i) as response:
-            request_text = response.read().decode('utf-8')
+            request_text = response.read().decode("utf-8")
     except request.HTTPError as http_err:
         print(f"HTTP error occurred: {http_err}")
         return None
@@ -315,6 +316,7 @@ def get_data(liste):
 
     return data
 
+
 def scrape(url):
     """Main function."""
     try:
@@ -342,7 +344,8 @@ def scrape(url):
     athletes, temps, ligue, perfs, categorie, annee = get_liste(rows, categories, perf)
     liste = [athletes, temps, ligue, perfs, categorie, annee]
     data = get_data(liste)
-    return data
+    return header, data
+
 
 def main():
     """Main function."""
