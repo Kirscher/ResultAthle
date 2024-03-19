@@ -27,7 +27,7 @@ To retrieve the '.csv' file containing the list of results from a running compet
 python scraping.py "url" nb_pages
 ```
 
-Where 'url' is the bases.athle URL of the competition to scrape and 'nb_pages' is the number of result pages you want to scrape.
+Where 'url' is the [bases.athle](https://bases.athle.fr/) URL of the competition to scrape and 'nb_pages' is the number of result pages you want to scrape.
 
 Example : 
 ![cli_output_example](/src/cli_output_example.png)
@@ -35,6 +35,8 @@ Example :
 ## Features Under Development
 
 We are continuously working to improve ResultAthle and add new features. Here are some of the features that are currently under development:
+
+- **WebApp:** we are developing a web application version of ResultAthle. This webapp will provide users with the flexibility to access and analyze race results from [bases.athle](https://bases.athle.fr/).
 
 - **Advanced Scraping Functions:** We are in the process of enhancing our web scraping capabilities to provide a more robust and sophisticated data extraction process. This will allow us to gather more detailed and comprehensive data from athletics competitions.
 
