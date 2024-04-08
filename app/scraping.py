@@ -1,24 +1,33 @@
 import sys
-import os
 import bs4
 import pandas as pd
-import numpy as np
 import re
 from urllib import request
 
 
 def read_input():
-    """Read command line arguments."""
+    """
+    Read command line arguments.
+
+    Returns
+    -------
+    tuple
+        A tuple containing the URL and the number of pages to scrape.
+        If the URL or number of pages is not provided, returns an error message and None.
+    """
+
     if len(sys.argv) < 2:
         return ("No URL provided", None)
-    elif len(sys.argv[1:]) < 2:
+
+    if len(sys.argv[1:]) < 2:
         return ("Number of pages not provided", None)
-    elif len(sys.argv[1:]) == 2:
+
+    if len(sys.argv[1:]) == 2:
         url = sys.argv[1:][0]
         nb_pages = sys.argv[1:][1]
         return (url, int(nb_pages))
-    else:
-        return ("Bad parameter value", None)
+
+    return ("Bad parameter value", None)
 
 
 # bareme et table de cotation
@@ -26,7 +35,15 @@ def read_input():
 
 
 def get_perf():
-    """Return performance levels."""
+    """
+    Return performance levels.
+
+    Returns
+    -------
+    dict
+        A dictionary mapping performance levels to their corresponding values.
+    """
+
     return {
         "IA": 40,
         "IB": 35,  # international
@@ -59,7 +76,15 @@ def get_perf():
 
 
 def get_cat():
-    """Return age categories."""
+    """
+    Return age categories.
+
+    Returns
+    -------
+    dict
+        A dictionary mapping age categories to their corresponding labels.
+    """
+
     return {
         "M10": "Masters 10",
         "M9": "Masters 9",
@@ -85,20 +110,40 @@ def get_cat():
 
 
 def get_categories(cat):
-    """Add gender (F/M) to categories."""
-    categoriesF = list(cat.keys())
-    for i in range(len(categoriesF)):
-        categoriesF[i] += "F"
+    """
+    Add gender (F/M) to categories.
 
-    categoriesM = list(cat.keys())
-    for i in range(len(categoriesM)):
-        categoriesM[i] += "M"
+    Parameters
+    ----------
+    cat : dict
+        A dictionary containing the categories.
 
-    return categoriesF + categoriesM
+    Returns
+    -------
+    list
+        A list of categories with appended gender labels.
+    """
+
+    return [category + gender for category in cat.keys() for gender in ("F", "M")]
 
 
 def get_page(url, i):
-    """Get page content from url."""
+    """
+    Get page content from URL.
+
+    Parameters
+    ----------
+    url : str
+        The URL of the page.
+    i : int
+        The page number.
+
+    Returns
+    -------
+    bs4.BeautifulSoup or None
+        The BeautifulSoup object containing the page content, or None if an error occurs.
+    """
+
     url_i = url + "&frmposition=" + str(i)
     try:
         with request.urlopen(url_i) as response:
@@ -114,7 +159,20 @@ def get_page(url, i):
 
 
 def get_rows(page):
-    """Get all rows from the page."""
+    """
+    Get all rows from the page.
+
+    Parameters
+    ----------
+    page : bs4.BeautifulSoup
+        The BeautifulSoup object representing the page.
+
+    Returns
+    -------
+    list
+        A list of rows extracted from the page.
+    """
+
     rows = []
     for i in page.find_all("tr"):
         if (
@@ -128,7 +186,21 @@ def get_rows(page):
 
 
 def read_header(page):
-    """Read header information from the page."""
+    """
+    Read header information from the page.
+
+    Parameters
+    ----------
+    page : bs4.BeautifulSoup
+        The BeautifulSoup object representing the page.
+
+    Returns
+    -------
+    dict
+        A dictionary containing header information such as competition name, location, date,
+        department, and label.
+    """
+
     header = page.find("div", {"class": "mainheaders"})
     header = str(header)
 
@@ -159,7 +231,20 @@ def read_header(page):
 
 
 def get_athletes(L):
-    """Get athletes names."""
+    """
+    Get athletes' names.
+
+    Parameters
+    ----------
+    L : list
+        A list of items from which to extract athletes' names.
+
+    Returns
+    -------
+    list
+        A list of athletes' names.
+    """
+
     re_athlete = re.compile(
         "[A-Z]{2,} ?-?[A-Z]* ?-?[A-Z]* ?-?[A-Z]*[A-Z]{1}[a-z]+ ?-?[A-Z]?[a-z]*"
     )
@@ -171,7 +256,20 @@ def get_athletes(L):
 
 
 def get_temps(L):
-    """Get finish time."""
+    """
+    Get finish times.
+
+    Parameters
+    ----------
+    L : list
+        A list of items from which to extract finish times.
+
+    Returns
+    -------
+    list
+        A list of finish times.
+    """
+
     re_temps = re.compile("<b>(?=\d).*(?=<\/b>)")
     temps = []
     for i in L:
@@ -181,26 +279,41 @@ def get_temps(L):
         temps[i] = temps[i][0].replace("<b>", "")
         try:
             temps[i] = pd.to_datetime(temps[i], format="%Hh%M'%S''")
-        except ValueError as e:
+        except ValueError:
             pass  # ignore error and try next datetime format
         try:
             temps[i] = pd.to_datetime(temps[i], format="%M'%S''")
-        except ValueError as e:
+        except ValueError:
             pass  # ignore error and try next datetime format
         try:
             temps[i] = pd.to_datetime(temps[i], format="%S''")
-        except ValueError as e:
+        except ValueError:
             pass  # ignore error and try next datetime format
     return temps
 
 
 def get_ligue(L, categories):
-    """Get league name."""
+    """
+    Get league names.
+
+    Parameters
+    ----------
+    L : list
+        A list of items from which to extract league names.
+    categories : list
+        A list of categories.
+
+    Returns
+    -------
+    list
+        A list of league names.
+    """
+
     re_ligue = re.compile("[A-Z]{3,}(?=<)|[A-Z]-[A-Z](?=<)")
     ligue = []
     for i in L:
         match = re_ligue.search(str(i))
-        if (match == None) or (match.group() in categories):
+        if (match is None) or (match.group() in categories):
             ligue.append("0")
         else:
             ligue.append(match.group())
@@ -208,7 +321,22 @@ def get_ligue(L, categories):
 
 
 def get_perfs(L, perf):
-    """Get performance level."""
+    """
+    Get performance levels.
+
+    Parameters
+    ----------
+    L : list
+        A list of items from which to extract performance levels.
+    perf : dict
+        A dictionary containing performance levels.
+
+    Returns
+    -------
+    list
+        A list of performance levels.
+    """
+
     re_perf = re.compile("[A-Z]{1,2}[1-8](?=<)|I[A,B](?=<)")
     perfs = []
     for i in L:
@@ -226,12 +354,27 @@ def get_perfs(L, perf):
 
 
 def get_categorie(L, categories):
-    """Get age category."""
+    """
+    Get age categories.
+
+    Parameters
+    ----------
+    L : list
+        A list of items from which to extract age categories.
+    categories : list
+        A list of categories.
+
+    Returns
+    -------
+    list
+        A list of age categories.
+    """
+
     re_cat = re.compile("[A-Z]{3}(?=<)|[A-Z]{1}\d[A-Z]{1}")
     categorie = []
     for i in L:
         match = re_cat.search(str(i))
-        if match == None:
+        if match is None:
             categorie.append(None)
         else:
             match = re_cat.findall(str(i))
@@ -244,12 +387,27 @@ def get_categorie(L, categories):
 
 
 def get_annee(L, categories):
-    """Get birth year."""
+    """
+    Get birth years.
+
+    Parameters
+    ----------
+    L : list
+        A list of items from which to extract birth years.
+    categories : list
+        A list of categories.
+
+    Returns
+    -------
+    list
+        A list of birth years.
+    """
+
     re_annee = re.compile("\/[0-9]{2}<")
     annee = []
     for i in L:
         match = re_annee.search(str(i))
-        if (match == None) or (match.group() in categories):
+        if (match is None) or (match.group() in categories):
             annee.append("0")
         else:
             year = int(str(match.group()).replace("/", "").replace("<", ""))
@@ -261,7 +419,25 @@ def get_annee(L, categories):
 
 
 def get_liste(L, categories, perf):
-    """Get all data from the page."""
+    """
+    Get all data from the page.
+
+    Parameters
+    ----------
+    L : list
+        A list of items from which to extract data.
+    categories : list
+        A list of categories.
+    perf : dict
+        A dictionary containing performance levels.
+
+    Returns
+    -------
+    tuple
+        A tuple containing lists of athletes, finish times, league names, performance levels,
+        age categories, and birth years.
+    """
+
     athletes = get_athletes(L)
     temps = get_temps(L)
     ligue = get_ligue(L, categories)
@@ -272,7 +448,21 @@ def get_liste(L, categories, perf):
 
 
 def get_data(liste):
-    """Create a dataframe from the data."""
+    """
+    Create a dataframe from the data.
+
+    Parameters
+    ----------
+    liste : tuple
+        A tuple containing lists of athletes, finish times, league names, performance levels,
+        age categories, and birth years.
+
+    Returns
+    -------
+    pandas.DataFrame
+        A DataFrame containing the extracted data.
+    """
+
     athletes = liste[0]
     temps = liste[1]
     ligue = liste[2]
@@ -281,7 +471,7 @@ def get_data(liste):
     annee = liste[5]
 
     debut = 0
-    while categorie[debut] == None:
+    while categorie[debut] is None:
         debut += 1
 
     liste = []
@@ -289,7 +479,6 @@ def get_data(liste):
         ligne = []
         ligne.append(athletes[i][0])
         ligne.append(ligue[i + debut])
-        # ligne.append(str(clubs[i+debut]))
         ligne.append(temps[i])
         ligne.append(perfs[i + debut])
         ligne.append(annee[i + debut])
@@ -318,7 +507,20 @@ def get_data(liste):
 
 
 def scrape(url):
-    """Main function."""
+    """
+    Main scraping function.
+
+    Parameters
+    ----------
+    url : str
+        The URL to scrape.
+
+    Returns
+    -------
+    tuple
+        A tuple containing header information and a DataFrame of extracted data.
+    """
+
     try:
         url, nb_pages = url, 1
         if nb_pages is None:
@@ -348,7 +550,10 @@ def scrape(url):
 
 
 def main():
-    """Main function."""
+    """Main function.
+    Extracts data from given URL and saves it in csv format.
+    """
+
     try:
         url, nb_pages = read_input()
         if nb_pages is None:
