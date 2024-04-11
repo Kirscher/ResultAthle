@@ -1,10 +1,11 @@
 import sys
-import os
-import bs4
-import pandas as pd
-import numpy as np
+# import os
 import re
 from urllib import request
+import bs4
+import pandas as pd
+# import numpy as np
+
 
 def read_input():
     """Read command line arguments."""
@@ -131,12 +132,12 @@ def read_header(page):
     header = page.find("div", {"class": "mainheaders"})
     header = str(header)
 
-    re_nom = re.compile("(?<=\- )(.*?)(?=\<)")
+    re_nom = re.compile(r"(?<=\- )(.*?)(?=\<)")
     text = re_nom.findall(header)
     nom = text[0]
     sous_titre = text[1]
 
-    re_lieu = re.compile("(?<=\>)(\D*?)(?=\ -)")
+    re_lieu = re.compile(r"(?<=\>)(\D*?)(?=\ -)")
     lieu = re_lieu.findall(header)[0]
 
     re_date = re.compile("[0-9]{2}/[0-9]{2}/[0-9]{2}")
@@ -171,7 +172,7 @@ def get_athletes(L):
 
 def get_temps(L):
     """Get finish time."""
-    re_temps = re.compile("<b>(?=\d).*(?=<\/b>)")
+    re_temps = re.compile(r"<b>(?=\d).*(?=<\/b>)")
     temps = []
     for i in L:
         temps.append(re_temps.findall(str(i)))
@@ -180,15 +181,15 @@ def get_temps(L):
         temps[i] = temps[i][0].replace("<b>", "")
         try:
             temps[i] = pd.to_datetime(temps[i], format="%Hh%M'%S''")
-        except ValueError as e:
+        except ValueError:
             pass  # ignore error and try next datetime format
         try:
             temps[i] = pd.to_datetime(temps[i], format="%M'%S''")
-        except ValueError as e:
+        except ValueError:
             pass  # ignore error and try next datetime format
         try:
             temps[i] = pd.to_datetime(temps[i], format="%S''")
-        except ValueError as e:
+        except ValueError:
             pass  # ignore error and try next datetime format
     return temps
 
@@ -199,7 +200,7 @@ def get_ligue(L, categories):
     ligue = []
     for i in L:
         match = re_ligue.search(str(i))
-        if (match == None) or (match.group() in categories):
+        if (match is None) or (match.group() in categories):
             ligue.append("0")
         else:
             ligue.append(match.group())
@@ -226,11 +227,11 @@ def get_perfs(L, perf):
 
 def get_categorie(L, categories):
     """Get age category."""
-    re_cat = re.compile("[A-Z]{3}(?=<)|[A-Z]{1}\d[A-Z]{1}")
+    re_cat = re.compile(r"[A-Z]{3}(?=<)|[A-Z]{1}\d[A-Z]{1}")
     categorie = []
     for i in L:
         match = re_cat.search(str(i))
-        if match == None:
+        if match is None:
             categorie.append(None)
         else:
             match = re_cat.findall(str(i))
@@ -244,11 +245,11 @@ def get_categorie(L, categories):
 
 def get_annee(L, categories):
     """Get birth year."""
-    re_annee = re.compile("\/[0-9]{2}<")
+    re_annee = re.compile(r"\/[0-9]{2}<")
     annee = []
     for i in L:
         match = re_annee.search(str(i))
-        if (match == None) or (match.group() in categories):
+        if (match is None) or (match.group() in categories):
             annee.append("0")
         else:
             year = int(str(match.group()).replace("/", "").replace("<", ""))
@@ -280,7 +281,7 @@ def get_data(liste):
     annee = liste[5]
 
     debut = 0
-    while categorie[debut] == None:
+    while categorie[debut] is None:
         debut += 1
 
     liste = []

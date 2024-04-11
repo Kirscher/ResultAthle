@@ -3,21 +3,23 @@
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
-import matplotlib.lines as pltlines
-import matplotlib.colors as colors
-import math
+# import matplotlib.lines as pltlines
+# import matplotlib.colors as colors
+# import math
 import statsmodels.tsa.filters.hp_filter as stat
 
-import seaborn as sns
-from datetime import datetime
-import time
+# import seaborn as sns
+# from datetime import datetime
+# import time
 import scipy
 
 from sklearn.neighbors import KernelDensity
 
 
 def idealBins(l):
-    # Trouve ne bon nombre de batch à utiliser. A force d'essais, on constate qu'au delà de 25, le signal est trop précis pour en tirer une loi lisse, au dessous de 10, ce package n'a plus d'intérêt.
+    # Trouve ne bon nombre de batch à utiliser. A force d'essais, on constate qu'au delà de 25,
+    #  le signal est trop précis pour en tirer une loi lisse, au dessous de 10 ,
+    # ce package n'a plus d'intérêt.
     # Input : l : longueur d'un data frame (ou autre itérable)
     # Output : bins : nombre entier, à entrer dans les arguments de la fonction dens
 
@@ -30,8 +32,10 @@ def dens(dur, **kwargs):
     # calcule une densité d'un itérable
     # **kwargs vont etre redonnés à la fonction maptplotlib.pyplot.hist
     # l'argument density est forcé à : True
-    # input :  dur, itérable (liste, série...) de dimension 1 contenant les valeurs dont la densité nous intéresse
-    # output : dens : array nupmy de dimension 2, dens[0] : abscisses des points, dens[1] : ordonnées des points
+    # input :  dur, itérable (liste, série...) de dimension 1 contenant
+    # les valeurs dont la densité nous intéresse
+    # output : dens : array nupmy de dimension 2, dens[0] : abscisses des points,
+    # dens[1] : ordonnées des points
 
     # bins = 20 pour un marathon,
     # bins = 12 pour un 10km
@@ -51,8 +55,10 @@ def dens(dur, **kwargs):
 
 def skdensiteLissee(dur, **kwargs):
     # cette fonction permet de trouver une densité sans passeer par les histogrammes
-    # Input : dur : array numpy de taille (1,n) ou (n,1) contenant les données dont la distribution nous intéresse
-    # Output : fonction à appliquer à un array numpy de taille (1,n) ou (k,1) pour calculer la valeur de la densité en ces points
+    # Input : dur : array numpy de taille (1,n) ou (n,1) contenant les données
+    # dont la distribution nous intéresse
+    # Output : fonction à appliquer à un array numpy de taille (1,n) ou (k,1) pour
+    # calculer la valeur de la densité en ces points
 
     dur = dur.reshape(-1, 1)  # format demandé par KernelDensity
     kde = KernelDensity(
@@ -67,13 +73,15 @@ def skdensiteLissee(dur, **kwargs):
 
 
 def separate(densite):
-    # prend en argument un array numpy de valeurs et sépare le signal en "tendance" et "bruit" avec un lambda de 0.1
+    # prend en argument un array numpy de valeurs et sépare le signal en "tendance"
+    # et "bruit" avec un lambda de 0.1
     # input :  densite : array numpy de dimension 2, taille (k,n)
-    # output : array nupmy de dimension 2, taille (k+1,n) où les 2 dernières lignes sont le bruit et la tendance de la derniere ligne de l'input
+    # output : array nupmy de dimension 2, taille (k+1,n) où les 2 dernières lignes sont le bruit
+    # et la tendance de la derniere ligne de l'input
 
     b, t = stat.hpfilter(densite[-1, :], lamb=0.01)
     result = np.zeros((len(densite) + 1, len(densite[0])))
-    result[0 : len(densite), :] = densite
+    result[0: len(densite), :] = densite
     result[-2] = b
     result[-1] = t
     return result
@@ -82,15 +90,19 @@ def separate(densite):
 def lissage(
     x, sep=False, kind="cubic", beginend=False
 ):  # sans **kwargs pour simplifier son utilisation
-    # prend en argument un ensemble de points à interpoler stockés dans un array numpy et retourne la fonction d'interpolation cubique si kind = 'cubic' ou linéaire sinon
-    # Input :    x : array numpy de dimension 2, taille(2,n) avec les abscisses des points à interpoler dans x[0] et leurs ordonnées dans x[1]
+    # prend en argument un ensemble de points à interpoler stockés dans un array numpy et
+    # retourne la fonction d'interpolation cubique si kind = 'cubic' ou linéaire sinon
+    # Input :    x : array numpy de dimension 2, taille(2,n) avec les abscisses des points
+    # à interpoler dans x[0] et leurs ordonnées dans x[1]
     #          sep : booléen. True si le signal doit être filtré par un HP filter
-    #         kind : 'cubic' pour une interpolation polyonomiale par morceaux, l'interpolation est linéaire sinon
-    #     beginend : tuple. Permet de forcer la fonction à prendre des valeurs nulles en beginend[0] et beginend[1]
+    #         kind : 'cubic' pour une interpolation polyonomiale par morceaux, l'interpolation est
+    # linéaire sinon
+    #     beginend : tuple. Permet de forcer la fonction à prendre des valeurs nulles
+    # en beginend[0] et beginend[1]
     # Output :   f : fonction d'une seule variable
 
     if (
-        beginend != False
+        beginend is not False
     ):  # pour imposer des points de début et de fin (ne sert que pour le tracé, pas les calculs !)
         begin = np.zeros((2, 1))
         end = np.zeros((2, 1))
@@ -99,8 +111,7 @@ def lissage(
 
         x = np.concatenate((begin, x, end), axis=1)
 
-    if sep == True:
-
+    if sep:
         t = separate(x)[2]
     else:
         t = x[1]
@@ -124,9 +135,12 @@ def lissage(
 
 
 def perfgoals(A):
-    # Fonction qui retrouve les pics de densité dans une distribution estimée, et les rend dans leur ordre d'importance
-    # input :        A : array numpy de dimension 2, taille (2,n) avec A[0] les abscisses et A[1] les ordonnées des points mesurés
-    # output :  result : array numpy de dimension 2, taille (2,k) avec result[0] les abscisses des pics et result[1] les valeurs de la densite en ces points
+    # Fonction qui retrouve les pics de densité dans une distribution estimée,
+    # et les rend dans leur ordre d'importance
+    # input :        A : array numpy de dimension 2, taille (2,n) avec A[0] les abscisses
+    #  et A[1] les ordonnées des points mesurés
+    # output :  result : array numpy de dimension 2, taille (2,k) avec result[0] les abscisses
+    #  des pics et result[1] les valeurs de la densite en ces points
     #                   l'output est trié par ordre d'importance (hauteur des pics)
     signal = separate(A)
     poly = scipy.interpolate.splrep(signal[0], signal[1])
@@ -143,16 +157,20 @@ def perfgoals(A):
         0
     ]  # on s'attend à ce que les points critiques soient proches des points où la é est mesurée
     roots = scipy.optimize.root(f1, guess).x  # trouve les zéros de f1
-    # dans le cadre du cours, il est meilleur d'utiliser un pd.Series, et de sélectionner les valeurs à l'aide d'un vecteur booléen. plutôt que de travailler sur un array ou une liste
+    # dans le cadre du cours, il est meilleur d'utiliser un pd.Series, et de sélectionner
+    #  les valeurs à l'aide d'un vecteur booléen. plutôt que de travailler sur un array ou une liste
     r = pd.Series(roots)
     bools = abs(f1(r)) < 1e-4
     #     print(f'bools : {bools}')
     r = r[bools]
     #     print(f'vraies racines :\n{r}')
-    # Les algorithmes de racines trouvent plusieurs fois les mêmes racines, à epsilon près. Supression des doublons:
+    # Les algorithmes de racines trouvent plusieurs fois les mêmes racines,
+    #  à epsilon près. Supression des doublons:
     r = np.rint(
         r
-    )  # rint (entier le plus proche) permet de se limiter aux valeurs entières et eliminer les doublons dûs à scipy.optimize.root
+    )
+    # rint (entier le plus proche) permet de se limiter aux valeurs entières
+    #  et eliminer les doublons dûs à scipy.optimize.root
     #     print(f'arrondis : {r}')
     r.drop_duplicates(inplace=True)
     #     print(f'dédoubloné :\n{r}')
@@ -170,7 +188,8 @@ def perfgoals(A):
     #     print(f"racines valables : {roots}")
     # ----------------------------- Ancienne méthode non robuste
     #     print(f"racines : {roots}")
-    #     roots = list(set(np.rint(roots))) #floor permet de se limiter aux valeurs entieres et eliminer les doublons dus a scipy.optimize.root
+    #     roots = list(set(np.rint(roots))) #floor permet de se limiter aux valeurs entieres et
+    #  eliminer les doublons dus a scipy.optimize.root
     #     print(f"floor : {roots}")
     #     roots=sorted(roots)
     #     print((f"sorted : {roots}"))
@@ -196,7 +215,9 @@ def perfgoals(A):
 
     h = lissage(
         A, sep=False, kind="linear"
-    )  # pour retrouver les vraies valeurs aux points approximés. Les vraies valeurs sont recalculées plutôt que lues
+    )
+    # pour retrouver les vraies valeurs aux points approximés.
+    # Les vraies valeurs sont recalculées plutôt que lues
     result = np.zeros((2, len(sortedTops)))
     result[0, :] = sortedTops
     result[1, :] = h(sortedTops)
@@ -205,8 +226,10 @@ def perfgoals(A):
 
 
 def topbotts(A, sort="performance"):
-    # retourne une liste contenant les abscisses des maxima locaux et une autre contenant les abscisses des minima locaux
-    # Inputs : A : array numpy de dimension 2, taille (2,n) avec A[0] les abscisses et A[1] les ordonnées des points mesurés
+    # retourne une liste contenant les abscisses des maxima locaux et une autre
+    # contenant les abscisses des minima locaux
+    # Inputs : A : array numpy de dimension 2, taille (2,n) avec A[0] les abscisses
+    # et A[1] les ordonnées des points mesurés
     #      sort : façon de trier les outputs.
     #             -Soit par ordre croissant des abscisses ('performance')
     #             -Soit par ordre croissant de courbure, les clusters les plus distincts ('values')
@@ -228,25 +251,33 @@ def topbotts(A, sort="performance"):
             x, poly, der=2
         )  # derivee seconde (pour tests de concavite)
 
-    tendance = np.take(signal, [0, 2], axis=0)
+    # tendance = np.take(signal, [0, 2], axis=0)
     guess = A[
         0
-    ]  # on s'attend à ce que les racines de f1 soient proches des abscisses originales, puisque les maximums originaux en font partie
+    ]
+    # on s'attend à ce que les racines de f1 soient proches des abscisses originales,
+    #  puisque les maximums originaux en font partie
     roots = scipy.optimize.root(f1, guess).x  # trouve les points critiques de f
     #    print(f"racines : {roots}\n")
 
-    # parfois, scipy.optimize.roots trouve des "racines" qui ne le sont pas il faut nettoyer ces données:
+    # parfois, scipy.optimize.roots trouve des "racines" qui ne le sont pas
+    # il faut nettoyer ces données:
 
-    # dans le cadre du cours, il est meilleur d'utiliser un pd.Series, et de sélectionner les valeurs à l'aide d'un vecteur booléen. plutôt que de travailler sur un array ou une liste
+    # dans le cadre du cours, il est meilleur d'utiliser un pd.Series,
+    #  et de sélectionner les valeurs à l'aide d'un vecteur booléen.
+    #  plutôt que de travailler sur un array ou une liste
     r = pd.Series(roots)
     bools = abs(f1(r)) < 1e-4
     #     print(f'bools : {bools}')
     r = r[bools]
     #     print(f'vraies racines :\n{r}')
-    # Les algorithmes de racines trouvent plusieurs fois les mêmes racines, à epsilon près. Supression des doublons:
+    # Les algorithmes de racines trouvent plusieurs fois les mêmes racines,
+    #  à epsilon près. Supression des doublons:
     r = np.rint(
         r
-    )  # rint (entier le plus proche) permet de se limiter aux valeurs entières et eliminer les doublons dûs à scipy.optimize.root
+    )
+    # rint (entier le plus proche) permet de se limiter aux valeurs entières
+    #  et eliminer les doublons dûs à scipy.optimize.root
     #     print(f'arrondis : {r}')
     r.drop_duplicates(inplace=True)
     #     print(f'dédoubloné :\n{r}')
@@ -290,10 +321,13 @@ def topbotts(A, sort="performance"):
 
     botts = sorted(
         botts
-    )  # devrait être inutile par construction, mais comme scipy.optimize.roots est boîte-noire, je préfère le metttre.
+    )
+    # devrait être inutile par construction, mais comme scipy.optimize.roots
+    #  est boîte-noire, je préfère le metttre.
     if sort == "performance":  # devrait être inutile par construction
         tops = sorted(tops)
-    # tri par ordre de courbure : plus la courbure (f2) est grande en norme, meilleurs sont les points (c'est à dire que la concentration est plus flagrante)
+    # tri par ordre de courbure : plus la courbure (f2) est grande en norme,
+    #  meilleurs sont les points (c'est à dire que la concentration est plus flagrante)
     if sort == "values":
         values = f2(tops)
         ind = np.argsort(values)
@@ -310,8 +344,10 @@ def limiters(A, **kwargs):
     Forme les zones distinctes (catégories de coureurs) à partir de listes de sommets et creux.
 
     Args:
-        A (numpy.ndarray): Array of dimension 2, size (2,n) with A[0] as the abscissas and A[1] as the ordinates of the measured points.
-        **kwargs: Additional arguments passed to topbotts. Possible arguments: sort='performance' or sort='values'.
+        A (numpy.ndarray): Array of dimension 2, size (2,n) with A[0] as the abscissas and A[1]
+        as the ordinates of the measured points.
+        **kwargs: Additional arguments passed to topbotts.
+        Possible arguments: sort='performance' or sort='values'.
 
     Returns:
         list: List of tuples representing the formed zones [(inf1,sup1), (inf2,sup2)...]
@@ -323,7 +359,7 @@ def limiters(A, **kwargs):
         under = A[0, 0]
         test = False
         j = 0
-        while j < (len(botts)) and test == False:
+        while j < (len(botts)) and test is False:
             if botts[j] < i:
                 under = botts[j]
                 j += 1
@@ -333,7 +369,7 @@ def limiters(A, **kwargs):
         over = A[0, -1]
         test = False
         j = len(botts) - 1
-        while j >= 0 and test == False:
+        while j >= 0 and test is False:
             if botts[j] > i:
                 over = botts[j]
                 j -= 1
