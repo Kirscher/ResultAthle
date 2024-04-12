@@ -1,10 +1,8 @@
 import sys
-# import os
 import re
 from urllib import request
 import bs4
 import pandas as pd
-# import numpy as np
 
 
 def read_input():
@@ -102,7 +100,7 @@ def get_page(url, i):
     url_i = url + "&frmposition=" + str(i)
     try:
         with request.urlopen(url_i) as response:
-            request_text = response.read().decode('utf-8')
+            request_text = response.read().decode("utf-8")
     except request.HTTPError as http_err:
         print(f"HTTP error occurred: {http_err}")
         return None
@@ -317,10 +315,9 @@ def get_data(liste):
     return data
 
 
-def main():
+def get_results(url, nb_pages):
     """Main function."""
     try:
-        url, nb_pages = read_input()
         if nb_pages is None:
             print(url)  # url contains the error message in this case
             sys.exit()
@@ -340,14 +337,7 @@ def main():
     else:
         print("Error: nb_pages must be greater than 0")
         return
-    print(header)
     athletes, temps, ligue, perfs, categorie, annee = get_liste(rows, categories, perf)
     liste = [athletes, temps, ligue, perfs, categorie, annee]
     data = get_data(liste)
-    print(data.head(10))
-    data.to_csv("output.csv", index=False)
-
-
-if __name__ == "__main__":
-    """Run main function."""
-    main()
+    return data
