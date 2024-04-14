@@ -1,8 +1,9 @@
-bs4
-pandas
-numpy
-matplotlib
-scipy
-statsmodels
-seaborn
-lxml
+bs4 >= 0.0.2
+pandas >= 2.2.2
+numpy >= 1.26.4
+matplotlib >= 3.8.4
+scipy >= 1.13.0
+statsmodels >= 0.14.1
+seaborn >= 0.13.2
+lxml >= 5.2.1 
+scikit-learn >= 1.4.2
