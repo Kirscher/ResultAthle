@@ -32,6 +32,22 @@ Where 'url' is the [bases.athle](https://bases.athle.fr/) URL of the competition
 Example : 
 ![cli_output_example](/src/cli_output_example.png)
 
+## Get HTML file with Quarto
+
+Quarto is to be downloaded here: [Quarto URL](https://quarto.org/docs/get-started/).
+
+To convert the main.ipynb to HTML, run:
+
+```sh
+quarto render .\main.ipynb --to html
+```
+
+To preview the HTML in localhost, run:
+
+```sh
+quarto preview .\main.ipynb
+```
+
 ## Features Under Development
 
 We are continuously working to improve ResultAthle and add new features. Here are some of the features that are currently under development:
