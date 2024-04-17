@@ -312,6 +312,13 @@ def get_data(liste):
 
     data = data.drop("Chrono", axis=1)
 
+    # Add columns for first name and last name
+    data['Prénom'] = data['Athlète'].str.extract('[A-Z]+(?:[- ]?[A-Z]+)? (.+)')
+    data['Nom'] = data.apply(lambda row: row['Athlète'].replace(row['Prénom'], ''), axis=1)
+
+    # Add column for duration in hours
+    data['h_duration'] = data['duration'].apply(lambda x : pd.to_datetime(x,unit="s").strftime('%H:%M:%S'))
+
     return data
 
 
