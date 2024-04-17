@@ -10,8 +10,8 @@ RUN apt-get -y update && \
 COPY requirements.txt .
 RUN pip install -r requirements.txt
 
-COPY test.py .
 COPY utils ./utils
 COPY src ./src
 COPY main.ipynb .
-CMD ["python3", "test.py"]
+COPY render.py .
+CMD ["python3", "render.py"]
