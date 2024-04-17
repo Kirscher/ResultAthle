@@ -3,6 +3,8 @@ import numpy as np
 import pandas as pd
 import utils.stat as stat
 
+from IPython.display import display, Markdown
+
 def graphePerso(prenom, nom, data, titre):
     densite=stat.dens(data['duration'], bins = stat.idealBins(len(data['duration'])))
     fcubic=stat.lissage(densite, sep = True,beginend = (data['duration'].min(),data['duration'].max()))
@@ -38,3 +40,10 @@ def graphePerso(prenom, nom, data, titre):
     )
 
     fig.show()
+
+def display_header(header):
+    display(Markdown(f"**Compétition:** {header['nom']}"))
+    display(Markdown(f"**Lieu:** {header['lieu']}"))
+    display(Markdown(f"**Date:** {header['date']}"))
+    display(Markdown(f"**Dept:** {header['dept']}"))
+    display(Markdown(f"**Label:** {header['label']}"))

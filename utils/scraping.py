@@ -347,4 +347,4 @@ def get_results(url, nb_pages):
     athletes, temps, ligue, perfs, categorie, annee = get_liste(rows, categories, perf)
     liste = [athletes, temps, ligue, perfs, categorie, annee]
     data = get_data(liste)
-    return data
+    return header, data
