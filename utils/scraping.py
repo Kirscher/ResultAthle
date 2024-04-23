@@ -563,3 +563,50 @@ def get_results(url, nb_pages):
     liste = [athletes, temps, ligue, perfs, categorie, annee]
     data = get_data(liste)
     return header, data
+
+def scrape_last_competitions(num_competitions):
+    """
+    Scrapes the last `num_competitions` competitions from the website https://bases.athle.fr/asp.net/accueil.aspx?frmbase=resultats.
+
+    Args:
+        num_competitions (int): The number of competitions to scrape.
+
+    Returns:
+        list: A list of dictionaries containing information about the competitions. Each dictionary contains the following keys:
+            - 'Date': The date of the competition.
+            - 'Famille': The category of the competition.
+            - 'Libellé': The label of the competition.
+            - 'Lieu': The location of the competition.
+            - 'URL': The URL of the competition.
+
+    """
+    url = "https://bases.athle.fr/asp.net/accueil.aspx?frmbase=resultats"
+    try:
+        with request.urlopen(url) as response:
+            request_text = response.read().decode("utf-8")
+    except request.HTTPError as http_err:
+        print(f"HTTP error occurred: {http_err}")
+        return None
+    except Exception as err:
+        print(f"Other error occurred: {err}")
+        return
+    else:
+        soup = bs4.BeautifulSoup(request_text, 'html.parser')
+        table = soup.find('table', id='ctnResultats')
+
+    competitions = []
+    if table:
+        rows = table.find_all('tr')[1:]
+        for row in rows[:num_competitions]:
+            cols = row.find_all('td')
+            if len(cols) >= 9:  
+                date = cols[4].text.strip()
+                famille = cols[6].text.strip()
+                libelle = cols[8].text.strip()
+                lieu = cols[10].text.strip()
+                url_competition = cols[0].find('a')['href'] if cols[0].find('a') else None
+                if url_competition:
+                    url_competition = "https://bases.athle.fr" + url_competition # add prefix
+                competitions.append({'Date': date, 'Famille': famille, 'Libellé': libelle, 'Lieu': lieu, 'URL': url_competition})
+    
+    return competitions
