@@ -48,6 +48,14 @@ To preview the HTML in localhost, run:
 quarto preview .\main.ipynb
 ```
 
+## Launch shiny server to be interactive
+
+To host the main.ipynb with shiny server:
+
+```sh
+quarto preview main.ipynb --execute --port 5000 --host 0.0.0.0
+```
+
 ## Features Under Development
 
 We are continuously working to improve ResultAthle and add new features. Here are some of the features that are currently under development:
