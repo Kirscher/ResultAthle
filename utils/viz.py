@@ -6,6 +6,24 @@ from IPython.display import display, Markdown
 
 
 def graphePerso(prenom, nom, data, titre, nb_bins=10_000):
+    """
+    Create a personalized graph showing the distribution of athlete performance
+    and the athlete's position.
+
+    Parameters
+    ----------
+    prenom : str
+        The first name of the athlete.
+    nom : str
+        The last name of the athlete.
+    data : pandas.DataFrame
+        The DataFrame containing athlete data.
+    titre : str
+        The title of the graph.
+    nb_bins : int, optional
+        The number of bins for the histogram. Defaults to 10,000.
+    """
+
     times_in_seconds = pd.to_datetime(data.h_duration, format='%H:%M:%S').dt.time.apply(
         lambda time: 3600*time.hour+60*time.minute+time.second)
     bins = np.linspace(times_in_seconds.iloc[0], times_in_seconds.iloc[-1], nb_bins)
@@ -70,6 +88,15 @@ def graphePerso(prenom, nom, data, titre, nb_bins=10_000):
 
 
 def display_header(header):
+    """
+    Display competition information.
+
+    Parameters
+    ----------
+    header : dict
+        Dictionary containing competition information.
+    """
+
     display(Markdown(f"**Compétition:** {header['nom']}"))
     display(Markdown(f"**Lieu:** {header['lieu']}"))
     display(Markdown(f"**Date:** {header['date']}"))
@@ -78,6 +105,15 @@ def display_header(header):
 
 
 def display_podium(data):
+    """
+    Display the podium visualization.
+
+    Parameters
+    ----------
+    data : pandas.DataFrame
+        DataFrame containing athlete data.
+    """
+
     data.h_duration = pd.to_datetime(data.h_duration, format='%H:%M:%S').dt.time
     podium = data.sort_values(by='h_duration').iloc[[2, 0, 1]]
 

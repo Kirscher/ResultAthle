@@ -3,14 +3,7 @@
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
-# import matplotlib.lines as pltlines
-# import matplotlib.colors as colors
-# import math
 import statsmodels.tsa.filters.hp_filter as stat
-
-# import seaborn as sns
-# from datetime import datetime
-# import time
 import scipy
 
 from sklearn.neighbors import KernelDensity
