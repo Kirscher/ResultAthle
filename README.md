@@ -1,6 +1,9 @@
 # ResultAthle
 <p align="center"><img src="src/logo.png"></p>
 
+[![ci](https://github.com/Kirscher/ResultAthle/actions/workflows/prod.yml/badge.svg)](https://github.com/Kirscher/ResultAthle/actions/workflows/prod.yml)
+[![documentation](https://github.com/Kirscher/ResultAthle/actions/workflows/documentation.yml/badge.svg)](https://github.com/Kirscher/ResultAthle/actions/workflows/documentation.yml)
+
 ResultAthle is a project aimed at making statistical tools more accessible at the amateur level in athletics. It addresses the challenges of data manipulation and the lack of accessible descriptive statistics at the club, race, or individual level.
 
 ## Table of Contents
