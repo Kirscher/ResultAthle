@@ -8,11 +8,15 @@ ResultAthle is a project aimed at making statistical tools more accessible at th
 
 ## Table of Contents
 
-- [Installation](#installation)
-- [Usage](#usage)
-- [Features under development](#features-under-development)
-- [Contributing](#contributing)
-- [License](#license)
+- [ResultAthle](#resultathle)
+  - [Table of Contents](#table-of-contents)
+  - [Installation](#installation)
+  - [Usage](#usage)
+    - [Python package](#python-package)
+    - [HTML dashboard with Quarto](#html-dashboard-with-quarto)
+  - [Features Under Development](#features-under-development)
+  - [Contributing](#contributing)
+  - [License](#license)
 
 ## Installation
 
@@ -24,18 +28,18 @@ pip install -r requirements.txt
 
 ## Usage
 
-To retrieve the '.csv' file containing the list of results from a running competition on the bases.athle results site, you can use the 'scraping.ipynb' notebook or simply run the following command:
+### Python package
 
-```sh
-python scraping.py "url" nb_pages
+To retrieve the '.csv' file containing the list of results from a running competition on the bases.athle results site, you can use the 'scraping.py' module:
+
+```python
+from utils.scraping import get_results
+header, data = get_results(url, nb_pages)
 ```
 
 Where 'url' is the [bases.athle](https://bases.athle.fr/) URL of the competition to scrape and 'nb_pages' is the number of result pages you want to scrape.
 
-Example : 
-![cli_output_example](/src/cli_output_example.png)
-
-## Get HTML file with Quarto
+### HTML dashboard with Quarto
 
 Quarto is to be downloaded here: [Quarto URL](https://quarto.org/docs/get-started/).
 
@@ -59,7 +63,7 @@ We are continuously working to improve ResultAthle and add new features. Here ar
 
 - **Advanced Scraping Functions:** We are in the process of enhancing our web scraping capabilities to provide a more robust and sophisticated data extraction process. This will allow us to gather more detailed and comprehensive data from athletics competitions.
 
-- **Visualization:** We are working on new visualization features that will allow users to better understand and interpret the data. This includes various types of charts and graphs.
+- **Visualization:** We are working on new visualization features that will allow users to better understand and interpret the running performance. This includes various types of charts and graphs.
 
 - **Performance Analysis:** We are developing new features for analyzing athletic performance. This will include statistical analysis and machine learning algorithms to identify patterns and trends in the data.
 
