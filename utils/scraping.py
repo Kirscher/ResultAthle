@@ -608,5 +608,5 @@ def scrape_last_competitions(num_competitions):
                 if url_competition:
                     url_competition = "https://bases.athle.fr" + url_competition # add prefix
                 competitions.append({'Date': date, 'Famille': famille, 'Libellé': libelle, 'Lieu': lieu, 'URL': url_competition})
-    
+                
     return competitions
