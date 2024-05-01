@@ -104,7 +104,7 @@ def display_header(header):
     display(Markdown(f"**Label:** {header['label']}"))
 
 
-def display_podium(data):
+def display_podium(data, title):
     """
     Display the podium visualization.
 
@@ -139,7 +139,7 @@ def display_podium(data):
         )
 
     fig.update_layout(
-        title="Podium",
+        title=title,
         yaxis_title="Durée",
         yaxis=dict(
             tickvals=[1, 2, 3],
