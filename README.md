@@ -55,6 +55,13 @@ To preview the HTML in localhost, run:
 quarto preview .\main.ipynb
 ```
 
+To host the HTML, run:
+
+```sh
+quarto preview main.ipynb --port 5000 --host 0.0.0.0 --execute
+```
+
+
 ## Features Under Development
 
 We are continuously working to improve ResultAthle and add new features. Here are some of the features that are currently under development:
