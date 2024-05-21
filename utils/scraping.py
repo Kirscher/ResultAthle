@@ -183,6 +183,7 @@ def get_rows(page):
     for i in page.find_all("tr"):
         if (
             "groups" not in str(i)
+            and "headers" not in str(i)
             and "mainheaders" not in str(i)
             and "barButtons" not in str(i)
             and "subheaderscom" not in str(i)
