@@ -30,14 +30,20 @@ pip install -r requirements.txt
 
 ### Python package
 
-To retrieve the '.csv' file containing the list of results from a running competition on the bases.athle results site, you can use the 'scraping.py' module:
+To retrieve competition results from a running competition on the bases.athle results site, you can use the `resultathle` package:
 
 ```python
-from utils.scraping import get_results
-header, data = get_results(url, nb_pages)
+from src.resultathle.scraper import scrape_competition
+header, data = scrape_competition(url, num_pages)
 ```
 
-Where 'url' is the [bases.athle](https://bases.athle.fr/) URL of the competition to scrape and 'nb_pages' is the number of result pages you want to scrape.
+Where `url` is the [bases.athle](https://bases.athle.fr/) URL of the competition to scrape and `num_pages` is the number of result pages you want to scrape.
+
+You can also use the CLI:
+
+```bash
+python -m src.resultathle.cli <url> <num_pages> --out results.csv --json results.json
+```
 
 ### HTML dashboard with Quarto
 

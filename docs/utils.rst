@@ -4,10 +4,10 @@ utils package
 Submodules
 ----------
 
-utils.scraping module
----------------------
+utils.stat module
+-----------------
 
-.. automodule:: utils.scraping
+.. automodule:: utils.stat
    :members:
    :undoc-members:
    :show-inheritance:
