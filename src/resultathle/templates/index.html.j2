@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{{ header.name or 'Competition results' }}</title>
+    <style>
+      body { font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, sans-serif; padding: 24px; }
+      h1,h2 { margin: 0 0 8px 0; }
+      .muted { color: #666; }
+      table { border-collapse: collapse; width: 100%; margin-top: 16px; }
+      th, td { border: 1px solid #ddd; padding: 8px; font-size: 14px; }
+      th { background: #f7f7f7; text-align: left; }
+      tr:nth-child(even) { background: #fafafa; }
+      .header { margin-bottom: 16px; }
+    </style>
+  </head>
+  <body>
+    <div class="header">
+      <h1>{{ header.name }}</h1>
+      <div class="muted">
+        <span>Location: {{ header.location }}</span>
+        {% if header.department %} &middot; <span>Department: {{ header.department }}</span>{% endif %}
+        {% if header.label %} &middot; <span>Label: {{ header.label }}</span>{% endif %}
+        {% if header.date %} &middot; <span>Date: {{ header.date }}</span>{% endif %}
+      </div>
+    </div>
+
+    <table>
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Athlete</th>
+          <th>First name</th>
+          <th>Last name</th>
+          <th>Category</th>
+          <th>League</th>
+          <th>Birth year</th>
+          <th>Performance</th>
+          <th>Finish time</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for row in results %}
+        <tr>
+          <td>{{ loop.index }}</td>
+          <td>{{ row.Athlete }}</td>
+          <td>{{ row.FirstName }}</td>
+          <td>{{ row.LastName }}</td>
+          <td>{{ row.Category }}</td>
+          <td>{{ row.League }}</td>
+          <td>{{ row.BirthYear }}</td>
+          <td>{{ row.Performance }}</td>
+          <td>{{ row.DurationHMS }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </body>
+</html>
