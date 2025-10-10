@@ -283,7 +283,7 @@ def build_results_dataframe(
     df["LastName"] = df.apply(lambda r: r["Athlete"].replace(str(r["FirstName"]), ""), axis=1)
 
     # Duration as HH:MM:SS string
-    df["DurationHMS"] = df["duration"].apply(lambda x: pd.to_datetime(x, unit="s").strftime("%H:%M:%S"))
+    df["DurationHMS"] = pd.to_timedelta(df["duration"], unit="s").dt.strftime("%H:%M:%S")
 
     # Final columns
     return df[[
