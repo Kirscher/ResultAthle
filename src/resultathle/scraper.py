@@ -273,7 +273,7 @@ def build_results_dataframe(
     df["minutes"] = df["FinishTime"].dt.minute
     df["seconds"] = df["FinishTime"].dt.second
 
-    df["time_delta"] = df["FinishTime"] - pd.to_datetime("'1900-01-01")
+    df["time_delta"] = df["FinishTime"] - pd.to_datetime('1900-01-01')
     df = df.sort_values("time_delta").reset_index(drop=True)
     df["time_gap"] = df["FinishTime"] - df["FinishTime"][0]
     df["duration"] = df["time_delta"].dt.total_seconds()
