@@ -118,12 +118,8 @@ def _extract_leagues(cells: Iterable[bs4.element.Tag], valid_categories: List[st
 def _extract_performance_bands(cells: Iterable[bs4.element.Tag], valid: List[str]) -> List[str]:
     bands: List[str] = []
     for cell in cells:
-        found = (
-            str(PERF_REGEX.findall(str(cell)))
-            .replace("[", "")
-            .replace("]", "")
-            .replace("'", "")
-        )
+        match = PERF_REGEX.search(str(cell))
+        found = match.group() if match else ""
         bands.append(found if found in valid else "")
     return bands
 
