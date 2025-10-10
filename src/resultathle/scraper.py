@@ -280,7 +280,7 @@ def build_results_dataframe(
 
     # Split names into FirstName / LastName
     df["FirstName"] = df["Athlete"].str.extract("[A-Z]+(?:[- ]?[A-Z]+)? (.+)")
-    df["LastName"] = df.apply(lambda r: r["Athlete"].replace(str(r["FirstName"]), ""), axis=1)
+    df["LastName"] = df["Athlete"].str.replace(df["FirstName"].astype(str), "", regex=False)
 
     # Duration as HH:MM:SS string
     df["DurationHMS"] = pd.to_timedelta(df["duration"], unit="s").dt.strftime("%H:%M:%S")
