@@ -1,8 +1,7 @@
 # ResultAthle
 <p align="center"><img src="src/logo.png"></p>
 
-[![ci](https://github.com/Kirscher/ResultAthle/actions/workflows/prod.yml/badge.svg)](https://github.com/Kirscher/ResultAthle/actions/workflows/prod.yml)
-[![documentation](https://github.com/Kirscher/ResultAthle/actions/workflows/documentation.yml/badge.svg)](https://github.com/Kirscher/ResultAthle/actions/workflows/documentation.yml)
+[![ci](https://github.com/Kirscher/ResultAthle/actions/workflows/ci.yml/badge.svg)](https://github.com/Kirscher/ResultAthle/actions/workflows/ci.yml)
 
 ResultAthle is a project aimed at making statistical tools more accessible at the amateur level in athletics. It addresses the challenges of data manipulation and the lack of accessible descriptive statistics at the club, race, or individual level.
 
@@ -13,7 +12,8 @@ ResultAthle is a project aimed at making statistical tools more accessible at th
   - [Installation](#installation)
   - [Usage](#usage)
     - [Python package](#python-package)
-    - [HTML dashboard with Quarto](#html-dashboard-with-quarto)
+    - [CLI](#cli)
+    - [GitHub Pages site](#github-pages-site)
   - [Features Under Development](#features-under-development)
   - [Contributing](#contributing)
   - [License](#license)
@@ -23,7 +23,7 @@ ResultAthle is a project aimed at making statistical tools more accessible at th
 To install the necessary dependencies, run the following command:
 
 ```sh
-pip install -r requirements.txt
+pip install -e ".[dev]"
 ```
 
 ## Usage
@@ -39,33 +39,19 @@ header, data = scrape_competition(url, num_pages)
 
 Where `url` is the [bases.athle](https://bases.athle.fr/) URL of the competition to scrape and `num_pages` is the number of result pages you want to scrape.
 
+### CLI
+
 You can also use the CLI:
 
 ```bash
-python -m src.resultathle.cli <url> <num_pages> --out results.csv --json results.json
+python -m src.resultathle.cli <url> <num_pages> --out results.csv --json results.json --site-dir site
 ```
 
-### HTML dashboard with Quarto
+The optional `--site-dir` renders a static `index.html` using the packaged template, which you can serve via any static host (including GitHub Pages).
 
-Quarto is to be downloaded here: [Quarto URL](https://quarto.org/docs/get-started/).
+### GitHub Pages site
 
-To convert the main.ipynb to HTML, run:
-
-```sh
-quarto render .\main.ipynb --to html
-```
-
-To preview the HTML in localhost, run:
-
-```sh
-quarto preview .\main.ipynb
-```
-
-To host the HTML, run:
-
-```sh
-quarto preview main.ipynb --port 5000 --host 0.0.0.0 --execute
-```
+This repository ships with a workflow that builds and deploys a static site to GitHub Pages on each push to `main`. Configure repository variables `COMP_URL` and `COMP_PAGES` to control which competition is scraped at deploy time. The build gracefully falls back to an empty page if scraping fails.
 
 
 ## Features Under Development

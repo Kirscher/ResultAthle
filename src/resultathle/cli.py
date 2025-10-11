@@ -8,6 +8,7 @@ from typing import Optional
 import pandas as pd
 
 from .scraper import CompetitionHeader, scrape_competition
+from .site import render_site
 
 
 def _write_csv(path: Path, df: pd.DataFrame) -> None:
@@ -34,6 +35,7 @@ def build_arg_parser() -> argparse.ArgumentParser:
     p.add_argument("pages", type=int, help="Number of result pages to scrape")
     p.add_argument("--out", type=Path, default=Path("output/results.csv"), help="Output CSV path")
     p.add_argument("--json", type=Path, default=None, help="Optional JSON output path")
+    p.add_argument("--site-dir", type=Path, default=None, help="Optional directory to render static site")
     return p
 
 
@@ -45,6 +47,9 @@ def main(argv: Optional[list[str]] = None) -> int:
     if args.json is not None:
         args.json.parent.mkdir(parents=True, exist_ok=True)
         _write_json(args.json, header, df)
+    if getattr(args, "site_dir", None) is not None:
+        args.site_dir.mkdir(parents=True, exist_ok=True)
+        render_site(args.site_dir, header, df)
     print(f"Saved {len(df)} rows to {args.out}")
     return 0
 
