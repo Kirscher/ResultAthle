@@ -172,7 +172,8 @@ cython_debug/
 
 ### Quarto files
 main_files
-*.html
+# Keep html files tracked when generated into site via CI
+# Do not ignore all html globally
 
 # Sphinx documentation
 !docs/**/*
